@@ -1,0 +1,25 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+table {
+    margin-top: 2rem;
+}
+
+input {
+    margin-right: 1rem;
+}
+
+th {
+    cursor: pointer;
+    &:hover {
+        background-color: #f1f1f1;
+    }
+    &:active {
+        background-color: #ddd;
+    }
+}
