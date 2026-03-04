@@ -71,6 +71,38 @@ function createTableRows() {
 
     tbody.appendChild(row);
   });
+
+  // Update summary whenever table is recreated
+  updateSummary();
+}
+
+// Function to calculate and update summary statistics
+function updateSummary() {
+  const totalEmployees = employees.length;
+
+  // Calculate average score
+  let averageScore = 0;
+  if (totalEmployees > 0) {
+    const totalScore = employees.reduce(
+      (sum, employee) => sum + employee.score,
+      0,
+    );
+    averageScore = (totalScore / totalEmployees).toFixed(1);
+  }
+
+  // Find top performer
+  let topPerformer = "-";
+  if (totalEmployees > 0) {
+    const highestScoreEmployee = employees.reduce((prev, current) =>
+      prev.score > current.score ? prev : current,
+    );
+    topPerformer = `${highestScoreEmployee.name} (${highestScoreEmployee.score})`;
+  }
+
+  // Update DOM elements
+  document.getElementById("totalEmployees").textContent = totalEmployees;
+  document.getElementById("averageScore").textContent = averageScore;
+  document.getElementById("topPerformer").textContent = topPerformer;
 }
 
 // Function to determine performance class based on score
@@ -84,10 +116,53 @@ function getPerformanceClass(score) {
   }
 }
 
-createTableRows();
-
 table.appendChild(tbody);
+
+// Create search and filter elements
+const searchInput = document.createElement("input");
+searchInput.placeholder = "Search by name...";
+searchInput.className = "search-input";
+searchInput.oninput = () => filterTable();
+
+const roleFilter = document.createElement("select");
+const roles = ["All", ...new Set(employees.map((e) => e.role))];
+roles.forEach((role) => {
+  const option = document.createElement("option");
+  option.value = role;
+  option.textContent = role;
+  roleFilter.appendChild(option);
+});
+roleFilter.onchange = () => filterTable();
+
+// Create Summary Section
+const summaryCard = document.createElement("div");
+summaryCard.className = "summary-card";
+summaryCard.innerHTML = `
+  <h3>Team Summary</h3>
+  <div class="summary-content">
+    <div class="summary-item">
+      <span class="summary-label">Total Employees:</span>
+      <span class="summary-value" id="totalEmployees">0</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Average Score:</span>
+      <span class="summary-value" id="averageScore">0</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Top Performer:</span>
+      <span class="summary-value" id="topPerformer">-</span>
+    </div>
+  </div>
+`;
+
+// Add all elements in correct order
+root.appendChild(searchInput);
+root.appendChild(roleFilter);
+root.appendChild(summaryCard);
 root.appendChild(table);
+
+// Initialize table rows AFTER all DOM elements are added
+createTableRows();
 
 let sortOrder = {};
 
@@ -110,22 +185,6 @@ function sortTable(columnIndex) {
   // Toggle the sort order for the next click
   sortOrder[columnIndex] = currentOrder === "asc" ? "desc" : "asc";
 }
-
-const searchInput = document.createElement("input");
-searchInput.placeholder = "Search by name...";
-searchInput.oninput = () => filterTable();
-root.insertBefore(searchInput, table);
-
-const roleFilter = document.createElement("select");
-const roles = ["All", ...new Set(employees.map((e) => e.role))];
-roles.forEach((role) => {
-  const option = document.createElement("option");
-  option.value = role;
-  option.textContent = role;
-  roleFilter.appendChild(option);
-});
-roleFilter.onchange = () => filterTable();
-root.insertBefore(roleFilter, table);
 
 function filterTable() {
   const searchTerm = searchInput.value.toLowerCase();

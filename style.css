@@ -10,7 +10,7 @@ table {
   margin-top: 2rem;
 }
 
-input {
+input.search-input {
   margin-inline: 1rem;
 }
 
@@ -79,11 +79,7 @@ th {
 /* Actions cell styling */
 .actions-cell {
   white-space: nowrap;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  text-align: center;
 }
 
 /* Performance-based row highlighting */
@@ -107,6 +103,20 @@ th {
 .performance-medium .actions-cell,
 .performance-low .actions-cell {
   background-color: transparent !important;
+}
+
+/* Modal overlay - full screen backdrop */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal {
@@ -239,4 +249,66 @@ th {
 
 .cancel-btn:hover {
   background-color: #545b62;
+}
+
+/* Summary Card Styling */
+.summary-card {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card h3 {
+  margin: 0 0 15px 0;
+  color: #343a40;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 10px;
+}
+
+.summary-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 150px;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.summary-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #495057;
+}
+
+/* Responsive design for summary */
+@media (max-width: 768px) {
+  .summary-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .summary-item {
+    min-width: auto;
+    width: 100%;
+  }
 }
