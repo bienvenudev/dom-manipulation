@@ -38,6 +38,11 @@ function createTableRows() {
   tbody.innerHTML = ""; // Clear existing rows
   employees.forEach((employee, index) => {
     const row = document.createElement("tr");
+
+    // Add performance-based styling
+    const performanceClass = getPerformanceClass(employee.score);
+    row.className = performanceClass;
+
     Object.values(employee).forEach((value) => {
       const td = document.createElement("td");
       td.textContent = value;
@@ -66,6 +71,17 @@ function createTableRows() {
 
     tbody.appendChild(row);
   });
+}
+
+// Function to determine performance class based on score
+function getPerformanceClass(score) {
+  if (score >= 85) {
+    return "performance-high";
+  } else if (score >= 70) {
+    return "performance-medium";
+  } else {
+    return "performance-low";
+  }
 }
 
 createTableRows();

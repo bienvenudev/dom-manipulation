@@ -86,6 +86,29 @@ th {
   z-index: 1000;
 }
 
+/* Performance-based row highlighting */
+.performance-high {
+  background-color: #d4edda !important;
+  border-color: #c3e6cb;
+}
+
+.performance-medium {
+  background-color: #fff3cd !important;
+  border-color: #ffeaa7;
+}
+
+.performance-low {
+  background-color: #f8d7da !important;
+  border-color: #f1c2c7;
+}
+
+/* Ensure action buttons maintain their styling */
+.performance-high .actions-cell,
+.performance-medium .actions-cell,
+.performance-low .actions-cell {
+  background-color: transparent !important;
+}
+
 .modal {
   background-color: white;
   border-radius: 8px;
